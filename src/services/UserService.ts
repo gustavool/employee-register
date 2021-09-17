@@ -19,7 +19,7 @@ class UserService {
     private userRepository: UserRepository
   ) {}
 
-  async createUser({
+  async create({
     name,
     email,
     location,
