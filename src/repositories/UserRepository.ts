@@ -1,4 +1,5 @@
-import { getRepository, Repository } from 'typeorm';
+import { Repository, getRepository } from 'typeorm';
+
 import { User } from '../entities/User';
 
 interface ICreateUser {
@@ -16,7 +17,10 @@ class UserRepository {
   }
 
   async create({
-    name, email, location, hiring_date,
+    name,
+    email,
+    location,
+    hiring_date,
   }: ICreateUser): Promise<User> {
     const user = this.repository.create({
       name,
