@@ -1,5 +1,8 @@
 import { container } from 'tsyringe';
 
-import { UserRepository } from './src/repositories/UserRepository';
+import { EmployeeRepository } from './src/repositories/EmployeeRepository';
 
-container.registerSingleton<UserRepository>('UserRepository', UserRepository);
+container.registerSingleton<EmployeeRepository>(
+  'EmployeeRepository',
+  EmployeeRepository
+);

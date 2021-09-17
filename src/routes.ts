@@ -1,12 +1,12 @@
 import { Router } from 'express';
 
-import { UserController } from './controllers/UserController';
+import { EmployeeController } from './controllers/EmployeeController';
 
 const router = Router();
 
-const userController = new UserController();
+const employeeController = new EmployeeController();
 
-router.post('/users', userController.create);
-router.get('/users/:id', userController.findById);
+router.post('/employees', employeeController.create);
+router.get('/employees/:id', employeeController.findById);
 
 export { router };
