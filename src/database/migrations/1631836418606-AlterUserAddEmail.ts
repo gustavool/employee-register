@@ -8,7 +8,7 @@ export class AlterUserAddEmail1631836418606 implements MigrationInterface {
         name: 'email',
         type: 'varchar',
         isNullable: true,
-      }),
+      })
     );
   }
 
