@@ -5,14 +5,17 @@ import { EmployeeService } from '../services/EmployeeService';
 
 class EmployeeController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, email, location, hiring_date } = request.body;
+    const { name, position, email, location, department, hiring_date } =
+      request.body;
 
     const employeeService = container.resolve(EmployeeService);
 
     const employee = await employeeService.create({
       name,
+      position,
       email,
       location,
+      department,
       hiring_date,
     });
 

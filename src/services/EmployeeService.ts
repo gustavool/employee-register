@@ -7,8 +7,10 @@ import { EmployeeRepository } from '../repositories/EmployeeRepository';
 
 interface IRequest {
   name: string;
+  position: string;
   email: string;
   location: string;
+  department: string;
   hiring_date: Date;
 }
 
@@ -21,8 +23,10 @@ class EmployeeService {
 
   async create({
     name,
+    position,
     email,
     location,
+    department,
     hiring_date,
   }: IRequest): Promise<Employee> {
     const employeeAlreadyExists = await this.employeeRepository.findByEmail(
@@ -35,8 +39,10 @@ class EmployeeService {
 
     const employee = await this.employeeRepository.create({
       name,
+      position,
       email,
       location,
+      department,
       hiring_date,
     });
 

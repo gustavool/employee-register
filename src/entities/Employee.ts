@@ -10,10 +10,16 @@ class Employee {
   name: string;
 
   @Column()
+  position: string;
+
+  @Column()
   email: string;
 
   @Column()
   location: string;
+
+  @Column()
+  department: string;
 
   @Column({ type: 'date' })
   hiring_date: Date;

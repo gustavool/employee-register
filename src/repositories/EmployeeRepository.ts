@@ -4,8 +4,10 @@ import { Employee } from '../entities/Employee';
 
 interface ICreateEmployee {
   name: string;
+  position: string;
   email: string;
   location: string;
+  department: string;
   hiring_date: Date;
 }
 
@@ -18,14 +20,18 @@ class EmployeeRepository {
 
   async create({
     name,
+    position,
     email,
     location,
+    department,
     hiring_date,
   }: ICreateEmployee): Promise<Employee> {
     const employee = this.repository.create({
       name,
+      position,
       email,
       location,
+      department,
       hiring_date,
     });
 
