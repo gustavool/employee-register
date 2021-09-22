@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import { createConnection } from 'typeorm';
 import 'express-async-errors';
@@ -11,12 +12,12 @@ import '../container';
 createConnection();
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.use(router);
 
 app.use(
-  // eslint-disable-next-line no-unused-vars
   (err: Error, request: Request, response: Response, next: NextFunction) => {
     if (err instanceof AppError) {
       return response.status(err.statusCode).json({
