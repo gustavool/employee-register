@@ -30,6 +30,14 @@ class EmployeeController {
 
     return response.status(201).json(employee);
   }
+
+  async findAll(request: Request, response: Response): Promise<Response> {
+    const employeeService = container.resolve(EmployeeService);
+
+    const employees = await employeeService.findAll();
+
+    return response.status(201).json(employees);
+  }
 }
 
 export { EmployeeController };

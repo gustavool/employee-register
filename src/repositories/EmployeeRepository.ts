@@ -49,6 +49,11 @@ class EmployeeRepository {
     const employee = await this.repository.findOne({ email });
     return employee;
   }
+
+  async findAll(): Promise<Employee[]> {
+    const employees = await this.repository.find();
+    return employees;
+  }
 }
 
 export { EmployeeRepository };

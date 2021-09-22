@@ -70,6 +70,11 @@ class EmployeeService {
     }
     return employee;
   }
+
+  async findAll(): Promise<Employee[]> {
+    const employees = await this.employeeRepository.findAll();
+    return employees;
+  }
 }
 
 export { EmployeeService };
