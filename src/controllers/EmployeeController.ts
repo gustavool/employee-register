@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { SimpleConsoleLogger } from 'typeorm';
 
 import { EmployeeService } from '../services/EmployeeService';
 
@@ -37,6 +38,15 @@ class EmployeeController {
     const employees = await employeeService.findAll();
 
     return response.status(201).json(employees);
+  }
+
+  async delete(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params;
+    const employeeService = container.resolve(EmployeeService);
+
+    await employeeService.delete(id);
+
+    return response.sendStatus(204);
   }
 }
 

@@ -75,6 +75,10 @@ class EmployeeService {
     const employees = await this.employeeRepository.findAll();
     return employees;
   }
+
+  async delete(id: string): Promise<void> {
+    await this.employeeRepository.delete(id);
+  }
 }
 
 export { EmployeeService };

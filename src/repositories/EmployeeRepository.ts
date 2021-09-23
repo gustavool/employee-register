@@ -54,6 +54,10 @@ class EmployeeRepository {
     const employees = await this.repository.find();
     return employees;
   }
+
+  async delete(id: string): Promise<void> {
+    await this.repository.delete(id);
+  }
 }
 
 export { EmployeeRepository };
