@@ -58,6 +58,10 @@ class EmployeeRepository {
   async delete(id: string): Promise<void> {
     await this.repository.delete(id);
   }
+
+  async update(employee: Employee): Promise<Employee> {
+    return await this.repository.save(employee);
+  }
 }
 
 export { EmployeeRepository };

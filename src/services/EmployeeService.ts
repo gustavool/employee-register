@@ -79,6 +79,21 @@ class EmployeeService {
   async delete(id: string): Promise<void> {
     await this.employeeRepository.delete(id);
   }
+
+  async update(employee: Employee, id: string): Promise<Employee> {
+    if (!uuidValidate(id)) {
+      throw new AppError('Invalid Uuid', 400);
+    }
+
+    const employeeExists = await this.employeeRepository.findById(employee.id);
+    if (!employeeExists) {
+      throw new AppError('Employee not found', 404);
+    }
+
+    const employeeUpdated = Object.assign(employeeExists, employee);
+
+    return this.employeeRepository.update(employeeUpdated);
+  }
 }
 
 export { EmployeeService };
