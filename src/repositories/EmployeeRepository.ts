@@ -10,6 +10,7 @@ interface ICreateEmployee {
   department: string;
   hiring_date: Date;
   created_at: Date;
+  updated_at: Date;
 }
 
 class EmployeeRepository {
@@ -27,6 +28,7 @@ class EmployeeRepository {
     department,
     hiring_date,
     created_at,
+    updated_at,
   }: ICreateEmployee): Promise<Employee> {
     const employee = this.repository.create({
       name,
@@ -36,6 +38,7 @@ class EmployeeRepository {
       department,
       hiring_date,
       created_at,
+      updated_at,
     });
 
     await this.repository.save(employee);

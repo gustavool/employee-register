@@ -45,6 +45,7 @@ class EmployeeService {
       department,
       hiring_date,
       created_at: new Date(),
+      updated_at: new Date(),
     });
 
     return employee;
@@ -90,6 +91,8 @@ class EmployeeService {
     if (!employeeExists) {
       throw new AppError('Employee not found', 404);
     }
+
+    employee.updated_at = new Date();
 
     const employeeUpdated = Object.assign(employeeExists, employee);
 
