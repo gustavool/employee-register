@@ -9,6 +9,7 @@ interface ICreateEmployee {
   location: string;
   department: string;
   hiring_date: Date;
+  created_at: Date;
 }
 
 class EmployeeRepository {
@@ -25,6 +26,7 @@ class EmployeeRepository {
     location,
     department,
     hiring_date,
+    created_at,
   }: ICreateEmployee): Promise<Employee> {
     const employee = this.repository.create({
       name,
@@ -33,6 +35,7 @@ class EmployeeRepository {
       location,
       department,
       hiring_date,
+      created_at,
     });
 
     await this.repository.save(employee);
@@ -60,7 +63,7 @@ class EmployeeRepository {
   }
 
   async update(employee: Employee): Promise<Employee> {
-    return await this.repository.save(employee);
+    return this.repository.save(employee);
   }
 }
 

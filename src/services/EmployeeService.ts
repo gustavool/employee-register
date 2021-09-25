@@ -44,6 +44,7 @@ class EmployeeService {
       location,
       department,
       hiring_date,
+      created_at: new Date(),
     });
 
     return employee;
