@@ -1,10 +1,12 @@
 import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
+import swaggerUi from 'swagger-ui-express';
 import { createConnection } from 'typeorm';
-import 'express-async-errors';
 
+import 'express-async-errors';
 import { AppError } from './errors/AppError';
 import { router } from './routes';
+import swaggerFile from './swagger.json';
 
 import './database';
 import '../container';
@@ -12,7 +14,10 @@ import '../container';
 createConnection();
 const app = express();
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
 app.use(cors());
+
 app.use(express.json());
 
 app.use(router);

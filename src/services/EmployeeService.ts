@@ -34,7 +34,7 @@ class EmployeeService {
     );
 
     if (employeeAlreadyExists) {
-      throw new AppError('Employee already exists');
+      throw new AppError('Employee already exists', 400);
     }
 
     const employee = await this.employeeRepository.create({
@@ -79,6 +79,9 @@ class EmployeeService {
   }
 
   async delete(id: string): Promise<void> {
+    if (!uuidValidate(id)) {
+      throw new AppError('Invalid Uuid', 400);
+    }
     await this.employeeRepository.delete(id);
   }
 

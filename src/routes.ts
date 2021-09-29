@@ -10,6 +10,6 @@ router.post('/employees', employeeController.create);
 router.get('/employees/:id', employeeController.findById);
 router.get('/employees', employeeController.findAll);
 router.delete('/employees/:id', employeeController.delete);
-router.patch('/employees/:id', employeeController.update);
+router.put('/employees/:id', employeeController.update);
 
 export { router };

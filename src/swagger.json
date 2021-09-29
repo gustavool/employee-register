@@ -1,0 +1,223 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Workpoint documentation",
+    "description": "Workpoint API",
+    "version": "1.0.0",
+    "contact": {
+      "email": "email@mail.com"
+    }
+  },
+  "paths": {
+    "/employees": {
+      "post": {
+        "tags": ["Employee"],
+        "summary": "Create an employee",
+        "description": "Create a new employee",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/NewEmployee"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Employee already exists"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Employee"],
+        "summary": "Get all employees",
+        "description": "List all employees",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Employee"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/employees/{id}": {
+      "get": {
+        "tags": ["Employee"],
+        "summary": "Get an employee by ID",
+        "description": "Get an employee by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Employee id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Employee"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Uuid"
+          },
+          "404": {
+            "description": "Employee not found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Employee"],
+        "summary": "Update an employee",
+        "description": "Update a new employee",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Employee id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/NewEmployee"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid Uuid"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Employee"],
+        "summary": "Delete an employee by ID",
+        "description": "Delete an employee by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Employee id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid Uuid"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Employee": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "position": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string"
+        },
+        "hiring_date": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "id": "UUID Example",
+        "name": "Example Name",
+        "position": "Example position",
+        "email": "email@email.com",
+        "location": "City/State",
+        "department": "Example department",
+        "hiring_date": "2021-09-28",
+        "created_at": "2021-09-28T23:24:02.460Z",
+        "updated_at": "2021-09-28T23:24:02.460Z"
+      }
+    },
+    "NewEmployee": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "position": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string"
+        },
+        "hiring_date": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "name": "Example Name",
+        "position": "Example position",
+        "email": "email@email.com",
+        "location": "City/State",
+        "department": "Example department",
+        "hiring_date": "2021-09-28"
+      }
+    }
+  }
+}

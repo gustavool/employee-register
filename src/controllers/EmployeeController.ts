@@ -50,7 +50,7 @@ class EmployeeController {
     const employeeService = container.resolve(EmployeeService);
     const employee = await employeeService.update(employeeReq, id);
 
-    return response.status(201).json(employee);
+    return response.status(200).json(employee);
   }
 }
 
