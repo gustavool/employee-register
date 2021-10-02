@@ -1,5 +1,3 @@
-import { Repository, getRepository } from 'typeorm';
-
 import { Employee } from '../entities/Employee';
 import { IEmployeeRepository } from './IEmployeeRepository';
 
@@ -14,12 +12,8 @@ interface ICreateEmployee {
   updated_at: Date;
 }
 
-class EmployeeRepository implements IEmployeeRepository {
-  private repository: Repository<Employee>;
-
-  constructor() {
-    this.repository = getRepository(Employee);
-  }
+class EmployeeRepositoryInMemory implements IEmployeeRepository {
+  employees: Employee[] = [];
 
   async create({
     name,
@@ -31,7 +25,9 @@ class EmployeeRepository implements IEmployeeRepository {
     created_at,
     updated_at,
   }: ICreateEmployee): Promise<Employee> {
-    const employee = this.repository.create({
+    const employee = new Employee();
+
+    Object.assign(employee, {
       name,
       position,
       email,
@@ -42,33 +38,39 @@ class EmployeeRepository implements IEmployeeRepository {
       updated_at,
     });
 
-    await this.repository.save(employee);
+    this.employees.push(employee);
 
     return employee;
   }
 
   async findById(id: string): Promise<Employee | undefined> {
-    const employee = await this.repository.findOne(id);
-    return employee;
+    return this.employees.find(employee => employee.id === id);
   }
 
   async findByEmail(email: string): Promise<Employee | undefined> {
-    const employee = await this.repository.findOne({ email });
-    return employee;
+    return this.employees.find(employee => employee.email === email);
   }
 
   async findAll(): Promise<Employee[]> {
-    const employees = await this.repository.find();
-    return employees;
+    return this.employees;
   }
 
   async delete(id: string): Promise<void> {
-    await this.repository.delete(id);
+    const employeeToDelete = this.employees.find(
+      employee => employee.id === id
+    );
+    this.employees = this.employees.filter(
+      employee => employee !== employeeToDelete
+    );
   }
 
   async update(employee: Employee): Promise<Employee> {
-    return this.repository.save(employee);
+    const employeeIndex = this.employees.findIndex(
+      employeeItem => employeeItem.id === employee.id
+    );
+    Object.assign(this.employees[employeeIndex], employee);
+    return this.employees[employeeIndex];
   }
 }
 
-export { EmployeeRepository };
+export { EmployeeRepositoryInMemory };

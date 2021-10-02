@@ -3,7 +3,7 @@ import { validate as uuidValidate } from 'uuid';
 
 import { Employee } from '../entities/Employee';
 import { AppError } from '../errors/AppError';
-import { EmployeeRepository } from '../repositories/EmployeeRepository';
+import { IEmployeeRepository } from '../repositories/IEmployeeRepository';
 
 interface IRequest {
   name: string;
@@ -18,7 +18,7 @@ interface IRequest {
 class EmployeeService {
   constructor(
     @inject('EmployeeRepository')
-    private employeeRepository: EmployeeRepository
+    private employeeRepository: IEmployeeRepository
   ) {}
 
   async create({

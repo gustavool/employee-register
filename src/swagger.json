@@ -87,7 +87,7 @@
       },
       "put": {
         "tags": ["Employee"],
-        "summary": "Update an employee",
+        "summary": "Update an employee by ID",
         "description": "Update a new employee",
         "parameters": [
           {
