@@ -7,7 +7,7 @@ let employeeService: EmployeeService;
 const validUuid = 'f7c216c6-6b41-4dc5-ab06-4dd06c13ecfc';
 const invalidUuid = '123456-invalid-uuid';
 
-describe('Employee tests', () => {
+describe('Employee service tests', () => {
   beforeEach(() => {
     employeeRepositoryInMemory = new EmployeeRepositoryInMemory();
     employeeService = new EmployeeService(employeeRepositoryInMemory);
@@ -60,7 +60,7 @@ describe('Employee tests', () => {
 
     const employeeById = await employeeService.findById(employee.id);
 
-    expect(employeeById?.email).toEqual(employee.email);
+    expect(employeeById?.id).toEqual(employee.id);
   });
 
   it('should not be able to list employee by invalid uuid', async () => {
@@ -78,7 +78,7 @@ describe('Employee tests', () => {
     }).rejects.toBeInstanceOf(AppError);
   });
 
-  it('should not be abre to list a not found employee by id', async () => {
+  it('should not be able to list a not found employee by id', async () => {
     expect(async () => {
       await employeeService.create({
         name: 'Employee test',
@@ -90,7 +90,37 @@ describe('Employee tests', () => {
       });
 
       await employeeService.findById(validUuid);
-    }).rejects.toBeInstanceOf(AppError);
+    }).rejects.toBeInstanceOf(new AppError('Employee not found', 404));
+  });
+
+  it('should be able to list employee by email', async () => {
+    const employee = await employeeService.create({
+      name: 'Employee test',
+      position: 'Assistant',
+      email: 'employee@mail.com',
+      location: 'Sao Paulo, SP',
+      department: 'Financial',
+      hiring_date: new Date(),
+    });
+
+    const employeeById = await employeeService.findByEmail(employee.email);
+
+    expect(employeeById?.email).toEqual(employee.email);
+  });
+
+  it('should not be able to list employee by email and invalid uuid', async () => {
+    expect(async () => {
+      await employeeService.create({
+        name: 'Employee test',
+        position: 'Assistant',
+        email: 'employee@mail.com',
+        location: 'Sao Paulo, SP',
+        department: 'Financial',
+        hiring_date: new Date(),
+      });
+
+      await employeeService.findByEmail('different_employee@mail.com');
+    }).rejects.toBeInstanceOf(new AppError('Invalid Uuid', 400));
   });
 
   it('should be to list all employees', async () => {
@@ -148,7 +178,7 @@ describe('Employee tests', () => {
       employee.updated_at = new Date();
 
       await employeeService.update(employee, invalidUuid);
-    }).rejects.toBeInstanceOf(AppError);
+    }).rejects.toBeInstanceOf(new AppError('Invalid Uuid', 400));
   });
 
   it('should not be able to update a not found employee by id', async () => {
@@ -165,7 +195,7 @@ describe('Employee tests', () => {
       employee.updated_at = new Date();
 
       await employeeService.update(employee, validUuid);
-    }).rejects.toBeInstanceOf(AppError);
+    }).rejects.toBeInstanceOf(new AppError('Employee not found', 404));
   });
 
   it('should be able to delete an employee', async () => {
@@ -182,6 +212,36 @@ describe('Employee tests', () => {
       await employeeService.delete(employee.id);
 
       await employeeService.findById(employee.id);
+    }).rejects.toBeInstanceOf(new AppError('Employee not found', 404));
+  });
+
+  it('should not be able to delete an employee by invalid uuid', async () => {
+    expect(async () => {
+      await employeeService.create({
+        name: 'Employee test',
+        position: 'Assistant',
+        email: 'employee@mail.com',
+        location: 'Sao Paulo, SP',
+        department: 'Financial',
+        hiring_date: new Date(),
+      });
+
+      await employeeService.delete(invalidUuid);
+    }).rejects.toBeInstanceOf(new AppError('Invalid Uuid', 400));
+  });
+
+  it('should not be able to delete a not found employee by id', async () => {
+    expect(async () => {
+      await employeeService.create({
+        name: 'Employee test',
+        position: 'Assistant',
+        email: 'employee@mail.com',
+        location: 'Sao Paulo, SP',
+        department: 'Financial',
+        hiring_date: new Date(),
+      });
+
+      await employeeService.delete(validUuid);
     }).rejects.toBeInstanceOf(new AppError('Employee not found', 404));
   });
 });

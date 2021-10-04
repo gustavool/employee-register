@@ -90,7 +90,7 @@ class EmployeeService {
       throw new AppError('Invalid Uuid', 400);
     }
 
-    const employeeExists = await this.employeeRepository.findById(employee.id);
+    const employeeExists = await this.employeeRepository.findById(id);
     if (!employeeExists) {
       throw new AppError('Employee not found', 404);
     }
